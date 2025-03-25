@@ -1,0 +1,30 @@
+{% extends 'learn_progs/base.html' %}
+{% block header %}
+<h2>Topic: {{ topic }}</h2>
+{% endblock header %}
+{% block content %}
+<a href="{% url 'new_entry' topic.id %}">add new entry</a>
+<h3>Entries:</h3>
+<ul>
+{% for entry in entries %}
+ <div class='panel panel-default'>
+  <div class='panel-heading'>
+   <h4>
+     {{ entry.date_added|date:'M d, Y H:i' }}
+   </h4>
+  </div>
+  <div class='panel-body'>
+   {{ entry.text|linebreaks }}
+  </div>
+   {% if entry in conditions %}
+    <a href="{% url 'edit_entry' topic.id %}">edit entry</a>
+   {% endif %}
+   <h4>{{ entry.owner }}</h4>
+  </div>
+ </div>
+{% empty %}
+There is no entries for this topic yet.
+{% endfor %}
+</ul>
+
+{% endblock content %}
